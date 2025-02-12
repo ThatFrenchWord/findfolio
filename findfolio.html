@@ -119,7 +119,7 @@
 <h1>Find Folio</h1>
 <h2>The Single Page Directory</h2>
 <h5 id="version-info">
-  v<span id="current-version">2</span>
+  v<span id="current-version">3</span>
   <span id="new-version" style="display: none;">
     &nbsp;— <a href="https://thatfrenchword.com/findfolio.html">Newer Version Available</a>
     &nbsp;— <a href="https://thatfrenchword.com/findfolio.html" download>Download</a>
@@ -137,15 +137,26 @@
   />
 </div>
 <div id="description">
-  <p>Find Folio is a single-page resource directory with full text search that is meant to be a shareable and locally useable with no internet. 
-    It is meant to be shared as openly as possible to perpetuate its existence. 
-  </p><p>Find Folio will be updated as regularly as possible and will be checked for dead links and new sites as often as possible. 
+  <h3>What is Find Folio?</h3>
+  <p>Find Folio is a single-page resource directory with full text search that is meant to be easily shareable and locally useable with no internet.</p>
+  <p>Find Folio will be updated as regularly as possible and will be checked for dead links and new sites as often as possible. 
     There will be onion links at some point as well to ensure anonymous access and availability of resources and services that may one day be outlawed.</p>
+    <h3>How to use Find Folio</h3>
+    <p>You can opt to download the page and open it in your browser, but this isn't required.<br/> 
+      You can search for resources by name, description, or tag. <br/>
+      You can also use the * or &quot;all&quot; to show all resources. <br/>
+      Click on a resource to open it in a new tab.</p>
+    <h3>How to contribute to Find Folio</h3>
+    <p>If you have a resource you'd like to add, please email it to <a href="mailto:I@ThatFrenchWord.net">I@ThatFrenchWord.net</a> or, if you are familiar with GitHub, you can submit a pull request to the <a href="https://github.com/ThatFrenchWord/findfolio">Find Folio GitHub repository</a>.</p>
+    <p>Please include a detailed description of the site and its offerings as well as tags to add to the site for easier searching.</p>
+    <h3>Where did Find Folio come from?</h3>
+    <p>Find Folio is a product of <a href="https://thatfrenchword.net">That French Word</a>--a group of friends helping friends and educating anyone who will listen.</p>
+    <p>That French Word is not a registered organization of any kind, just a term used to describe a gathering of people that believe in the freedom to be one's self without fear of persecution or worse.</p>
 </div></div>
 <div id="resource-list"></div>
 
 <script>
-  const CURRENT_VERSION = 2;
+  const CURRENT_VERSION = 3;
   fetch('https://thatfrenchword.com/folioversion.txt')
     .then(response => response.text())
     .then(latestVersionStr => {
