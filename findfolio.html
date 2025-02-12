@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Find Folio - The Single Page Directory</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, h5 {
+      text-align: center;
+    }
+
+    #description {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    #search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #search-input {
+      width: 50%;
+      padding: 10px;
+      font-size: 16px;
+      background: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    #resource-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .resource-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .resource-item h2 a {
+      color: var(--link-color);
+    }
+
+    .tags {
+      margin-top: 10px;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--text-color);
+      padding: 3px 6px;
+      margin: 2px;
+      font-size: 0.85em;
+      border-radius: 4px;
+    }
+
+    #dark-mode-toggle {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 15px;
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    :root {
+      --bg-color: #f7f7f7;
+      --text-color: #222;
+      --input-bg: #fff;
+      --border-color: #ccc;
+      --card-bg: #fff;
+      --tag-bg: #eee;
+      --link-color: #0073e6;
+      --button-bg: #0073e6;
+      --button-text: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #f1f1f1;
+      --input-bg: #333;
+      --border-color: #555;
+      --card-bg: #222;
+      --tag-bg: #444;
+      --link-color: #4bb8ff;
+      --button-bg: #4bb8ff;
+      --button-text: #121212;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Find Folio</h1>
+<h2>The Single Page Directory</h2>
+<h5 id="version-info">
+  v<span id="current-version">2</span>
+  <span id="new-version" style="display: none;">
+    &nbsp;— <a href="https://thatfrenchword.com/findfolio.html">Newer Version Available</a>
+    &nbsp;— <a href="https://thatfrenchword.com/findfolio.html" download>Download</a>
+  </span>
+</h5>
+
+<button id="dark-mode-toggle">Toggle Dark Mode</button>
+
+<div id="search-container">
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Type to search resources..."
+    oninput="filterResources()"
+  />
+</div>
+<div id="description">
+  <p>Find Folio is a single-page resource directory with full text search that is meant to be a shareable and locally useable with no internet. 
+    It is meant to be shared as openly as possible to perpetuate its existence. 
+  </p><p>Find Folio will be updated as regularly as possible and will be checked for dead links and new sites as often as possible. 
+    There will be onion links at some point as well to ensure anonymous access and availability of resources and services that may one day be outlawed.</p>
+</div></div>
+<div id="resource-list"></div>
+
+<script>
+  const CURRENT_VERSION = 2;
+  fetch('https://thatfrenchword.com/folioversion.txt')
+    .then(response => response.text())
+    .then(latestVersionStr => {
+      const latestVersion = parseFloat(latestVersionStr.trim()) || 0;
+      if (latestVersion > CURRENT_VERSION) {
+        document.getElementById('new-version').style.display = 'inline';
+      }
+    })
+    .catch(error => {
+      console.error('Version check failed:', error);
+    });
+
+  const resources = [
+    {
+      url: "https://thatfrenchword.com/findfolio.html",
+      name: "Find Folio - The Single Page Directory",
+      description: "A single-page searchable directory for support services and resources. Download and share widely.",
+      tags: ["folio", "download"]
+    },
+    {
+      url: "https://paste.thatfrenchword.net/",
+      name: "That French Word - Paste Bin",
+      description: "A privacy-focused paste bin for sharing text securely.",
+      tags: ["pastebin", "tools"]
+    },
+    {
+      url: "https://play.google.com/store/apps/details?id=org.a5calls.android.a5calls",
+      name: "5 Calls",
+      description: "An app to contact representatives on important issues.",
+      tags: ["app", "activism", "calls"]
+    },
+    {
+      name: "Transfigure Print Services",
+      url: "https://transfigureprintco.com/",
+      description: "Supporting trans and queer businesses through fundraising.",
+      tags: ["trans", "support", "fundraising"]
+    },
+    {
+      name: "The Trevor Project",
+      url: "https://thetrevorproject.org",
+      description: "Crisis support and advocacy for LGBTQ+ youth.",
+      tags: ["crisis services", "support"]
+    },
+    {
+      name: "Rainbow Railroad",
+      url: "https://rainbowrailroad.org",
+      description: "Helping LGBTQ+ people escape persecution.",
+      tags: ["advocacy", "support"]
+    },
+    {
+      name: "CrimethInc.",
+      url: "https://crimethinc.com",
+      description: "Anarchist books, resources, and activism guides.",
+      tags: ["education", "activism"]
+    },
+    {
+      name: "The Icarus Project",
+      url: "https://theicarusproject.net",
+      description: "Navigating mental health and neurodiversity.",
+      tags: ["mental health", "neurodiversity"]
+    },
+    {
+      name: "The Audre Lorde Project",
+      url: "https://alp.org",
+      description: "Community organizing for LGBTQ+ people of color.",
+      tags: ["activism", "community"]
+    },
+    {
+      name: "The Sylvia Rivera Law Project",
+      url: "https://srlp.org",
+      description: "Legal services and advocacy for transgender, intersex, and gender non-conforming people.",
+      tags: ["legal services", "advocacy"]
+    },
+    {
+      name: "GLAAD",
+      url: "https://glaad.org/transgender/resources/",
+      description: "Resources for transgender individuals and allies.",
+      tags: ["legal services", "advocacy"]
+    },
+    {
+      name: "The Okra Project",
+      url: "https://theokraproject.com",
+      description: "Providing meals and resources to Black trans people in need.",
+      tags: ["support", "food"]
+    }
+  ];
+
+  function filterResources() {
+    const query = document.getElementById("search-input").value.toLowerCase();
+    const container = document.getElementById("resource-list");
+
+    if (query === "") {
+      container.innerHTML = "";
+      return;
+    }
+
+    if (query === "*" || query === "all") {
+      container.innerHTML = "";
+      resources.forEach(resource => {
+        const item = document.createElement("div");
+        item.className = "resource-item";
+        item.innerHTML = `<h2><a href="${resource.url}" target="_blank">${resource.name}</a></h2>
+                          <p>${resource.description}</p>
+                          <div class="tags">${resource.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>`;
+        container.appendChild(item);
+      });
+      return;
+    }
+
+    const filtered = resources.filter(resource =>
+      resource.name.toLowerCase().includes(query) ||
+      resource.description.toLowerCase().includes(query) ||
+      resource.tags.join(" ").toLowerCase().includes(query)
+    );
+
+    container.innerHTML = filtered.length === 0 ? "<p>No matching resources found.</p>" : "";
+
+    filtered.forEach(resource => {
+      const item = document.createElement("div");
+      item.className = "resource-item";
+      item.innerHTML = `<h2><a href="${resource.url}" target="_blank">${resource.name}</a></h2>
+                        <p>${resource.description}</p>
+                        <div class="tags">${resource.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}</div>`;
+      container.appendChild(item);
+    });
+  }
+
+  document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark");
+    localStorage.setItem("theme", isDark ? "light" : "dark");
+  });
+
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+</script>
+
+</body>
+</html>
