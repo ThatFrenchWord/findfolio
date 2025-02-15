@@ -10,7 +10,7 @@ You can also use the * or "all" to show all resources.
 Click on a resource to open it in a new tab.
 
 ## How to contribute to Find Folio
-If you have a resource you'd like to add, please email it to I@ThatFrenchWord.net or, if you are familiar with GitHub, you can submit a pull request to the Find Folio GitHub repository.
+If you have a resource you'd like to add, please email it to I@ThatFrenchWord.net or you can submit an issue.
 
 Please include a detailed description of the site and its offerings as well as tags to add to the site for easier searching.
 
