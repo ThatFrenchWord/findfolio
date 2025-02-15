@@ -119,7 +119,7 @@
 <h1>Find Folio</h1>
 <h2>The Single Page Directory</h2>
 <h5 id="version-info">
-  v<span id="current-version">3</span>
+  v<span id="current-version">4</span>
   <span id="new-version" style="display: none;">
     &nbsp;— <a href="https://thatfrenchword.com/findfolio.html">Newer Version Available</a>
     &nbsp;— <a href="https://thatfrenchword.com/findfolio.html" download>Download</a>
@@ -136,6 +136,7 @@
     oninput="filterResources()"
   />
 </div>
+<div id="resource-list"></div>
 <div id="description">
   <h3>What is Find Folio?</h3>
   <p>Find Folio is a single-page resource directory with full text search that is meant to be easily shareable and locally useable with no internet.</p>
@@ -153,10 +154,9 @@
     <p>Find Folio is a product of <a href="https://thatfrenchword.net">That French Word</a>--a group of friends helping friends and educating anyone who will listen.</p>
     <p>That French Word is not a registered organization of any kind, just a term used to describe a gathering of people that believe in the freedom to be one's self without fear of persecution or worse.</p>
 </div></div>
-<div id="resource-list"></div>
 
 <script>
-  const CURRENT_VERSION = 3;
+  const CURRENT_VERSION = 4;
   fetch('https://thatfrenchword.com/folioversion.txt')
     .then(response => response.text())
     .then(latestVersionStr => {
